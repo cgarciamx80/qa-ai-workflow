@@ -6,10 +6,16 @@ import { generateTestPlan } from "./agents/planner.js";
 import { generatePlaywrightTests } from "./agents/codeGen.js";
 import { runTests } from "./runner/playwrightRunner.js";
 import { analyzeResults } from "./agents/analyzer.js";
+import { MOCK_TEST_RESULTS } from "./mocks/mockData.js";
+import { generateMarkdownReport } from "./report/markdownReport.js";
 
 async function runPipeline(story: UserStory): Promise<PipelineResult> {
-  if (!process.env["ANTHROPIC_API_KEY"]) {
+  if (!CONFIG.mockMode && !process.env["ANTHROPIC_API_KEY"]) {
     throw new Error("ANTHROPIC_API_KEY is not set. Create a .env file from .env.example.");
+  }
+
+  if (CONFIG.mockMode) {
+    console.log("   ⚠️  Running in MOCK MODE — no API calls will be made");
   }
 
   fs.mkdirSync(CONFIG.outputDir, { recursive: true });
@@ -23,7 +29,10 @@ async function runPipeline(story: UserStory): Promise<PipelineResult> {
   await generatePlaywrightTests(plan, story);
 
   console.log("\n🎭 Stage 3: Running Playwright tests...");
-  const results = await runTests();
+  const results = CONFIG.mockMode ? MOCK_TEST_RESULTS : await runTests();
+  if (CONFIG.mockMode) {
+    console.log("   [MOCK] Returning hardcoded test results");
+  }
   fs.writeFileSync(`${CONFIG.outputDir}/results.json`, JSON.stringify(results, null, 2));
   console.log(`   ✅ ${results.length} tests executed`);
 
@@ -35,13 +44,15 @@ async function runPipeline(story: UserStory): Promise<PipelineResult> {
     `${CONFIG.outputDir}/pipeline-result.json`,
     JSON.stringify(pipelineResult, null, 2)
   );
+  fs.writeFileSync(`${CONFIG.outputDir}/REPORT.md`, generateMarkdownReport(pipelineResult));
 
   console.log("\n📋 Pipeline complete!");
   console.log(`   Passed:     ${results.filter((r) => r.status === "passed").length}`);
   console.log(`   Failed:     ${results.filter((r) => r.status === "failed").length}`);
   console.log(`   Skipped:    ${results.filter((r) => r.status === "skipped").length}`);
   console.log(`   Bugs filed: ${bugs.length}`);
-  console.log(`\n📁 Output: ${CONFIG.outputDir}/pipeline-result.json`);
+  console.log(`   📁 Output: ${CONFIG.outputDir}/pipeline-result.json`);
+  console.log(`   📄 Report: ${CONFIG.outputDir}/REPORT.md`);
 
   return pipelineResult;
 }
@@ -58,7 +69,33 @@ const exampleStory: UserStory = {
   ],
 };
 
-runPipeline(exampleStory).catch((err: unknown) => {
+function loadStory(): UserStory {
+  const storyFlagIndex = process.argv.indexOf("--story");
+  if (storyFlagIndex === -1) {
+    return exampleStory;
+  }
+
+  const storyPath = process.argv[storyFlagIndex + 1];
+  if (!storyPath || storyPath.startsWith("--")) {
+    throw new Error("--story requires a file path, e.g. --story ./input/story.json");
+  }
+
+  if (!fs.existsSync(storyPath)) {
+    throw new Error(`Story file not found: ${storyPath}`);
+  }
+
+  const raw = fs.readFileSync(storyPath, "utf-8");
+  const parsed = JSON.parse(raw) as UserStory;
+
+  if (!parsed.title || !parsed.description || !Array.isArray(parsed.acceptanceCriteria)) {
+    throw new Error(`Invalid story file — must have: title, description, acceptanceCriteria[]`);
+  }
+
+  console.log(`   📖 Loaded story from ${storyPath}: "${parsed.title}"`);
+  return parsed;
+}
+
+runPipeline(loadStory()).catch((err: unknown) => {
   console.error("\n❌ Pipeline failed:", err instanceof Error ? err.message : err);
   process.exit(1);
 });

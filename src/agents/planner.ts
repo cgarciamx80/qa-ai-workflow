@@ -1,10 +1,16 @@
 import Anthropic from "@anthropic-ai/sdk";
 import type { UserStory, TestPlan } from "../types.js";
 import { CONFIG } from "../config.js";
+import { MOCK_TEST_PLAN } from "../mocks/mockData.js";
 
 const client = new Anthropic();
 
 export async function generateTestPlan(story: UserStory): Promise<TestPlan> {
+  if (CONFIG.mockMode) {
+    console.log("   [MOCK] Returning hardcoded test plan");
+    return MOCK_TEST_PLAN;
+  }
+
   const response = await client.messages.create({
     model: CONFIG.model,
     max_tokens: CONFIG.maxTokens.planner,

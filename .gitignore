@@ -1,8 +1,9 @@
 node_modules/
-dist/
-output/
-tests/generated.spec.ts
 .env
+output/*
+!output/REPORT.md
+tests/generated.spec.ts
 *.log
 playwright-report/
 test-results/
+dist/

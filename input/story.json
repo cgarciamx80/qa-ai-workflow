@@ -1,0 +1,11 @@
+{
+  "title": "Todo list management",
+  "description": "As a user, I can add, complete, and delete todos so I can track my tasks.",
+  "acceptanceCriteria": [
+    "User can add a new todo by typing and pressing Enter",
+    "User can mark a todo as complete by clicking the checkbox",
+    "User can delete a todo with the delete button",
+    "Completed todos show with a strikethrough",
+    "Todo count updates correctly after each action"
+  ]
+}

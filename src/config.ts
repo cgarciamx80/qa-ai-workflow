@@ -1,4 +1,5 @@
 export const CONFIG = {
+  mockMode: process.argv.includes("--mock"),
   model: "claude-opus-4-6",
   demoBaseUrl: "https://demo.playwright.dev/todomvc",
   outputDir: "output",

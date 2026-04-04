@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import type { TestResult, BugReport } from "../types.js";
 import { CONFIG } from "../config.js";
+import { MOCK_ANALYSIS, MOCK_BUGS } from "../mocks/mockData.js";
 
 const client = new Anthropic();
 
@@ -8,6 +9,11 @@ export async function analyzeResults(results: TestResult[]): Promise<{
   analysis: string;
   bugs: BugReport[];
 }> {
+  if (CONFIG.mockMode) {
+    console.log("   [MOCK] Returning hardcoded analysis and bug reports");
+    return { analysis: MOCK_ANALYSIS, bugs: MOCK_BUGS };
+  }
+
   if (results.length === 0) {
     return { analysis: "No test results to analyze.", bugs: [] };
   }
