@@ -18,6 +18,20 @@ If a developer implements the wrong behavior, tests generated from their code wi
 
 ---
 
+## My Role
+
+I designed and built this AI-assisted QA workflow as a personal portfolio project to demonstrate how modern QA practices can be accelerated with AI while maintaining strong requirements-first methodology.
+
+My focus was on:
+- Defining the end-to-end QA process and methodology
+- Creating the requirements-first playbook that drives all test generation
+- Designing the structured pipeline and output formats (Jira & Azure DevOps)
+- Using AI (Claude) as an intelligent assistant to accelerate test plan creation, structured test cases, and bug reporting — always guided by QA methodology and requirements-first validation
+
+I used AI tools to help implement parts of the code, but the architecture, QA logic, and decision-making were driven by my 18+ years of real-world QA leadership experience.
+
+---
+
 ## How It Works
 
 ```
@@ -200,13 +214,25 @@ qa-ai-workflow/
 
 ---
 
-## Purpose
+## Scope of This Project
 
-This project demonstrates how AI can be integrated into a real QA workflow — from requirement analysis to defect reporting.
+This repository demonstrates a practical **AI-assisted QA workflow** built by a Senior QA Lead.
 
-It focuses on practical, explainable QA processes rather than experimental automation.
+**What this project shows:**
+- Requirements-first test design and methodology
+- AI-assisted generation of test plans and structured test cases
+- Practical use of Playwright as a supporting tool
+- End-to-end traceability from user story → test execution → analysis → bug reporting
+- Clean, reproducible QA artifacts (Markdown reports + structured JSON)
 
-This is a portfolio project, not a production system.
+**What this project is NOT:**
+- A production-grade automation framework
+- A demonstration of deep Playwright or test automation framework engineering
+- An attempt to replace QA decision-making with AI (QA logic remains human-driven)
+- An advanced Playwright engineering project
+- An example of building complex test automation architectures from scratch
+
+It is a working proof-of-concept that shows how a senior QA professional can leverage AI to work faster and smarter while keeping quality and methodology at the center.
 
 ---
 
