@@ -7,3 +7,4 @@ tests/generated.spec.ts
 playwright-report/
 test-results/
 dist/
+CONTEXT.md
