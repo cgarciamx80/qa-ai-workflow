@@ -10,7 +10,7 @@ export async function runTests(): Promise<TestResult[]> {
 
   const result = spawnSync(
     "npx",
-    ["playwright", "test", CONFIG.generatedSpecFile, "--reporter=json"],
+    ["playwright", "test", CONFIG.generatedSpecFile],
     { encoding: "utf-8", shell: true }
   );
 
