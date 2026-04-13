@@ -28,7 +28,7 @@ My focus was on:
 - Designing the structured pipeline and output formats (Jira & Azure DevOps)
 - Using AI (Claude) as an intelligent assistant to accelerate test plan creation, structured test cases, and bug reporting — always guided by QA methodology and requirements-first validation
 
-I used AI tools to help implement parts of the code, but the architecture, QA logic, and decision-making were driven by my 18+ years of real-world QA leadership experience.
+The architecture, QA logic, and decision-making were driven by my 18+ years of real-world QA leadership experience.
 
 ---
 
@@ -141,8 +141,6 @@ Steps to Reproduce:
 ```
 
 See [`output/REPORT.md`](./output/REPORT.md) for the full sample.
-
-> 📸 Screenshot of a real pipeline run will be added once live API execution is configured.
 
 ---
 
