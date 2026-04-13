@@ -18,20 +18,6 @@ If a developer implements the wrong behavior, tests generated from their code wi
 
 ---
 
-## My Role
-
-I designed and built this AI-assisted QA workflow as a personal portfolio project to demonstrate how modern QA practices can be accelerated with AI while maintaining strong requirements-first methodology.
-
-My focus was on:
-- Defining the end-to-end QA process and methodology
-- Creating the requirements-first playbook that drives all test generation
-- Designing the structured pipeline and output formats (Jira & Azure DevOps)
-- Using AI (Claude) as an intelligent assistant to accelerate test plan creation, structured test cases, and bug reporting — always guided by QA methodology and requirements-first validation
-
-The architecture, QA logic, and decision-making were driven by my 18+ years of real-world QA leadership experience.
-
----
-
 ## How It Works
 
 ```
@@ -212,31 +198,10 @@ qa-ai-workflow/
 
 ---
 
-## Scope of This Project
-
-This repository demonstrates a practical **AI-assisted QA workflow** built by a Senior QA Lead.
-
-**What this project shows:**
-- Requirements-first test design and methodology
-- AI-assisted generation of test plans and structured test cases
-- Practical use of Playwright as a supporting tool
-- End-to-end traceability from user story → test execution → analysis → bug reporting
-- Clean, reproducible QA artifacts (Markdown reports + structured JSON)
-
-**What this project is NOT:**
-- A production-grade automation framework
-- A demonstration of deep Playwright or test automation framework engineering
-- An attempt to replace QA decision-making with AI (QA logic remains human-driven)
-- An advanced Playwright engineering project
-- An example of building complex test automation architectures from scratch
-
-It is a working proof-of-concept that shows how a senior QA professional can leverage AI to work faster and smarter while keeping quality and methodology at the center.
-
----
-
 ## Author
 
-**Carlos García**
-QA Engineer | AI-assisted testing | Playwright | Azure DevOps | Claude
+**Carlos García** — Senior QA Lead with 20+ years in software quality, test strategy, and AI-assisted workflows.
 
-[GitHub](https://github.com/cgarciamx80)
+- [holteck.com](https://holteck.com)
+- [GitHub](https://github.com/cgarciamx80)
+- Available for QA consulting and contracts via [Upwork](https://www.upwork.com/agencies/holteck/)
