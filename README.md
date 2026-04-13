@@ -204,4 +204,4 @@ qa-ai-workflow/
 
 - [holteck.com](https://holteck.com)
 - [GitHub](https://github.com/cgarciamx80)
-- Available for QA consulting and contracts via [Upwork](https://www.upwork.com/agencies/holteck/)
+- Available for QA consulting and contracts via [Upwork](https://www.upwork.com/agencies/1621343907528159232/)
