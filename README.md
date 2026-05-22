@@ -200,8 +200,8 @@ qa-ai-workflow/
 
 ## Author
 
-**Carlos García** — Senior QA Lead with 20+ years in software quality, test strategy, and AI-assisted workflows.
+**Carlos García** — Senior QA Engineer with 20+ years in software quality, test strategy, and AI-assisted workflows.
 
 - [holteck.com](https://holteck.com)
 - [GitHub](https://github.com/cgarciamx80)
-- Available for QA consulting and contracts via [Upwork](https://www.upwork.com/agencies/1621343907528159232/)
+- [LinkedIn](https://linkedin.com/in/carlos-garcia-aiqa)
