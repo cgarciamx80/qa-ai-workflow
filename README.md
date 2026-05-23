@@ -2,7 +2,7 @@
 
 Simulates a real QA workflow by converting requirements into executable tests and structured defect reports using AI.
 
-An AI-assisted QA pipeline that takes a user story and produces a test plan, structured test cases, Playwright tests, executed results, and bug reports — following a requirements-first methodology.
+An AI-assisted QA pipeline that takes a user story and produces a test plan, structured test cases, Playwright tests, executed results, and bug reports, following a requirements-first methodology.
 
 Built as a portfolio project to demonstrate how AI can augment real-world QA engineering, not replace the thinking behind it.
 
@@ -12,7 +12,7 @@ Built as a portfolio project to demonstrate how AI can augment real-world QA eng
 
 Most QA automation tools generate tests from code. This project takes a different approach:
 
-> **Tests should be generated from requirements and user intent — not from what the developer happened to build.**
+> **Tests should be generated from requirements and user intent, not from what the developer happened to build.**
 
 If a developer implements the wrong behavior, tests generated from their code will validate the wrong behavior. This pipeline starts from acceptance criteria, the same way a QA engineer should.
 
@@ -44,7 +44,7 @@ Each stage produces a structured output. Everything lands in `output/`.
 
 | Feature | Description |
 |---|---|
-| `--mock` mode | Full pipeline run with zero API calls — for development and demos |
+| `--mock` mode | Full pipeline run with zero API calls, for development and demos |
 | `--story` flag | Load any user story from a JSON file |
 | Markdown report | Human-readable `output/REPORT.md` with tables, results, and bug reports |
 | Structured test cases | Typed by category: functional, negative, edge, regression |
@@ -136,11 +136,11 @@ This project follows a **requirements-first QA approach** documented in [`docs/A
 
 Key principles:
 
-- **AC first** — every test case references a specific acceptance criterion
-- **No code-first testing** — implementation details are only used for edge cases and regression risk
-- **Atomic test cases** — each test verifies exactly one thing, no OR conditions
-- **Honest automation** — tests are flagged when they cannot be reliably automated
-- **Traceable outputs** — acceptance criteria → test case → execution result → bug report
+- **AC first:** every test case references a specific acceptance criterion
+- **No code-first testing:** implementation details are only used for edge cases and regression risk
+- **Atomic test cases:** each test verifies exactly one thing, no OR conditions
+- **Honest automation:** tests are flagged when they cannot be reliably automated
+- **Traceable outputs:** acceptance criteria → test case → execution result → bug report
 
 This reflects how QA should work in teams where requirements and design decisions drive quality, not just the code that was written.
 
@@ -200,7 +200,7 @@ qa-ai-workflow/
 
 ## Author
 
-**Carlos García** — Senior QA Engineer with 20+ years in software quality, test strategy, and AI-assisted workflows.
+**Carlos García**, Senior QA Engineer with 20+ years in software quality, test strategy, and AI-assisted workflows.
 
 - [holteck.com](https://holteck.com)
 - [GitHub](https://github.com/cgarciamx80)
