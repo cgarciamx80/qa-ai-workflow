@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "tsx src/pipeline.ts",
+    "eval": "tsx src/eval/run_eval.ts",
     "test:run": "playwright test tests/generated.spec.ts",
     "report": "playwright show-report"
   },
