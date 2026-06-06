@@ -34,6 +34,10 @@ User Story (JSON)
   Bug Reports      → AI analyzes failures, files bugs in JIRA or ADO format
       ↓
   REPORT.md        → Clean markdown summary of the full run
+      ↓
+  LLM-as-Judge     → Second AI layer scores each test case for quality
+      ↓
+  eval-results.json → Traceability, atomicity, verifiability scores per TC
 ```
 
 Each stage produces a structured output. Everything lands in `output/`.
@@ -50,6 +54,7 @@ Each stage produces a structured output. Everything lands in `output/`.
 | Structured test cases | Typed by category: functional, negative, edge, regression |
 | Bug reports | Generated in both JIRA and Azure DevOps format |
 | Requirements-first | Tests derived from acceptance criteria, not code diffs |
+| LLM-as-judge eval | Second AI layer scores each generated test case on traceability, atomicity, and verifiability |
 
 ---
 
@@ -88,45 +93,59 @@ npm start -- --story ./input/story.json --mock
 npm start -- --story ./input/story.json
 ```
 
+### Run the eval layer (scores generated test cases for quality)
+
+```bash
+npm run eval
+```
+
+Reads `output/pipeline-result.json` and scores each test case using a second AI call. Results saved to `output/eval-results.json`. See [`FINDINGS.md`](./FINDINGS.md) for an example run with analysis.
+
 ---
 
 ## Sample Output
 
-After a run, `output/REPORT.md` contains:
+After a pipeline run, `output/REPORT.md` contains the full summary. Example from a TodoMVC run (8 test cases generated, 8/8 passing):
 
 ```
 # QA Report — Todo list management
-Generated: 2026-04-04 00:34:11 UTC
+Generated: 2026-06-06 22:47:16 UTC
 
 ## Summary
-Passed: 4 | Failed: 1 | Skipped: 1 | Bugs filed: 1
-
-## Test Cases
-| ID     | Title                    | Type       | Priority |
-|--------|--------------------------|------------|----------|
-| TC-001 | Add a new todo item      | functional | high     |
-| TC-002 | Mark a todo as complete  | functional | high     |
-| TC-003 | Delete a todo item       | functional | high     |
-| TC-006 | Submit empty todo        | negative   | medium   |
+Passed: 8 | Failed: 0 | Skipped: 0 | Bugs filed: 0
 
 ## Execution Results
-| ID     | Title                    | Status      | Duration |
-|--------|--------------------------|-------------|----------|
-| TC-001 | Add a new todo item      | ✅ passed   | 843ms    |
-| TC-002 | Mark a todo as complete  | ✅ passed   | 1102ms   |
-| TC-003 | Delete a todo item       | ❌ failed   | 3021ms   |
-| TC-006 | Submit empty todo        | ⏭️ skipped  | —        |
-
-## Bug Reports
-### Delete button not reliably clickable via hover
-Severity: minor
-Steps to Reproduce:
-1. Navigate to the app
-2. Add a todo item
-3. Attempt to click the destroy button without hover
+| ID     | Title                                          | Status    | Duration |
+|--------|------------------------------------------------|-----------|----------|
+| TC-001 | Add a new todo by typing text and pressing Enter | passed   | 4363ms   |
+| TC-002 | Mark a todo as complete using the checkbox      | passed   | 1367ms   |
+| TC-003 | Delete a todo using the delete button           | passed   | 1474ms   |
+| TC-004 | Todo count updates correctly                    | passed   | 1546ms   |
+| TC-005 | Attempt to add a todo with empty input          | passed   | 1149ms   |
+| ...    | ...                                             | ...       | ...      |
 ```
 
-See [`output/REPORT.md`](./output/REPORT.md) for the full sample.
+After running `npm run eval`, `output/eval-results.json` contains per-test-case quality scores:
+
+```
+=== QA EVAL RESULTS ===
+
+ID      Trace   Atomic   Verify   Avg
+TC-001  5       4        5        4.7
+TC-002  5       3        4        4.0
+TC-003  5       4        5        4.7
+TC-004  5       2        4        3.7   ← atomicity issue: tests 3 behaviors in one case
+TC-007  3       3        2        2.7   ← verifiability issue: two alternative expected results
+TC-008  2       3        4        3.0   ← traceability issue: behavior not in acceptance criteria
+
+avg_ac_traceability: 3.9
+avg_atomicity:       3.4
+avg_verifiability:   3.8
+overall_avg:         3.7
+coverage_score:      5/5
+```
+
+See [`FINDINGS.md`](./FINDINGS.md) for the full analysis.
 
 ---
 
@@ -168,6 +187,8 @@ qa-ai-workflow/
 │   │   ├── planner.ts          # AI → test plan + test cases
 │   │   ├── codeGen.ts          # AI → Playwright spec
 │   │   └── analyzer.ts         # AI → results analysis + bug reports
+│   ├── eval/
+│   │   └── run_eval.ts         # LLM-as-judge: scores generated test cases
 │   ├── runner/
 │   │   └── playwrightRunner.ts # Executes tests, parses results
 │   ├── report/
@@ -180,9 +201,11 @@ qa-ai-workflow/
 ├── input/
 │   └── story.json              # Example user story input
 ├── output/
-│   └── REPORT.md               # Sample pipeline output
+│   ├── REPORT.md               # Pipeline output: results and bug reports
+│   └── eval-results.json       # Eval output: per-test-case quality scores
 ├── tests/
 │   └── generated.spec.ts       # AI-generated Playwright tests
+├── FINDINGS.md                 # Analysis of an example eval run
 └── .env.example
 ```
 
@@ -195,6 +218,7 @@ qa-ai-workflow/
 - Experience combining manual QA methodology with automation
 - Practical use of AI APIs in a structured, typed pipeline
 - End-to-end thinking: from acceptance criteria to filed bug reports
+- LLM evaluation design: building rubric-based judges to measure AI output quality
 
 ---
 
